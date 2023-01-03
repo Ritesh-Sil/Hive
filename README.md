@@ -241,7 +241,92 @@ In that case using external table is the safest option so that other frameworks
 do not face any impact.
 
 
+-------Default delimiters in hive using text file format ---------
+Tect file will no have metadata, we need to spcify the delimiters
+default : ASCII
 
+1. DEOP Existing
+2. Create table orders with default delimiters
+3. Decribe formatted
+4. Insert into the table 
+5. All null with , del files.
+6. Create the table order_stage with delimiter ','
+7. Describe formatted
+8. load data command into order stage
+9. select query
+10. coiunt(*)
+11. Insert into table orders select * from order_stage
+12. Describe formatted orders
+13. haddop fs -get <hdfs location>
+14. view file_name : See the ascii delimiters
+
+
+-------------  Overview of file formats - stored as clause ---------
+
+If we want to store the data with any other file format,
+we need to use the stored as clause
+
+RC file is depricated and has been replaced by the ORC file format
+ORC and the parquet are the most popular columnar file formats.
+
+AVRO : Binary json.
+
+Sequence file : outdated
+
+if your data is not in a particular file format use a stage table in middle, then convert into desired file format in a new atble..
+
+
+------------    Hive vs Traditional RDBMS --------------------------
+RDMS : transactional systems
+
+schema on write in RDMS : Data quality but not good for batch load
+
+1. Schema on read and schema on write.
+2. Transactional processing vs Batch processing
+3. Scale of the data.
+4. Indexing
+5. ACID
+6. DCL :  Commits and rollbacks
+7. Metastore and Data decoupling
+
+
+------------   Truncating and dropping tables in hive --------------
+
+hive --database training_retail
+show tables;
+dscribe formatted <table name>
+hdfs -ls 
+
+drop table orders;
+
+dfs -ls
+
+
+if it is external table the data will not get deleted.
+
+drop database ;
+
+
+truncate will delete the data but not the metadata.
+
+1. Create database
+2. Create table
+3. Load data
+4. select * 
+5. Describe formatted
+6. truncate table <>
+7. List the hdfs dir
+
+1. Create the external table;
+2. Describe formatted <>;
+3. Load the data
+4. dfs -ls
+5. Truncate table  <>: Cannot truncate non-managed table orders
+
+Truncate table is applicable only for the managed table.
+
+DROP table <>;
+dfs -rm -R <hdfs path>
 
 
 

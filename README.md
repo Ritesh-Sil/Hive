@@ -1,3 +1,102 @@
+hive
+dfs -ls -help;
+dfs -ls -R ;
+
+MR or Tez engine for hive execution
+Warehouse directory --> By Default
+
+hive -e "SET;" | grep warehouse
+
+SET hive.metastore.warehouse.dir;
+hive.metastore.warehouse.dir=/apps/hive/warehuose
+
+
+------------------ Create database --------------------------
+
+hive 
+
+SET hive.metastore.warehouse.dir = /user/itv004887/warehouse
+
+create database training_retail; --> create training_retail.db in warehouse directory
+Sub dir under the warehouse dir
+
+DATABASE name : training_retail_ritesh
+USE training_retail_ritesh;
+
+
+
+hadoop fs -ls /user/itv004887/warehouse | grep -w training_retail
+
+You can create as many databases as you want.
+
+Create DATABASE IF NOT EXISTS training_retail;
+
+
+---------------- Creating Table in a database ------------------
+USE training_retail_ritesh;
+
+CREATE TABLE NEW_ORDERS
+(
+	ORDER_ID INT,
+	ORDER_DATE STRING,
+	ORDER_NAME STRING
+)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ',';
+
+table --> folder -->
+hdfs://m01.itversity.com:9000/user/itv004887/warehouse/training_retail_ritesh.db/new_orders
+
+dfs -ls /user/itv004887/warehouse/
+dfs -ls /user/itv004887/warehouse/training_retail_ritesh.db
+
+describe new_orders;
+
+------------- RETRIEVE METADATA OF HIVE -----------------
+
+DESCRIBE EXTENDED NEW_ORDERS;
+
+DESCRIBE FORMATTED NEW_ORDERS;
+
+
+mETA DATA IS NOT STORED IN hdfs LOCATION DUE TO PERFORMANCE ISSUES
+
+/etc/hive/conf/hive-site.xml 
+
+ls -lrt /etc/hive/conf/
+
+jdbc:postgresql://g01.itversity.com:5432/metastore
+
+hive.metastore.dbaccess.ssl.properties
+
+
+-----------
+hive cli is depricated , it did not have the authentication and authorization features
+
+Now for authentication and authorization beeline is used.
+Hive is connected using JDBC from beeline
+
+
+beeline --help
+beeline
+!list
+!history
+!sh ls -ltr
+!connect jdbc:hive2://<hostname>:<port# 10000>/training_retail
+give username and pwd 
+
+show tables;
+
+beeline -u jdbc:hive2://<hostname>:<port# 10000>/training_retail
+-n <user>
+
+show tables;
+show create tables;
+describe formatted <table_name>
+
+we can use -e flag to run hive queries from linux terminal
+
+
+
 --- Create tables in hive --
 temp/external/managed
 

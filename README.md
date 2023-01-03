@@ -329,6 +329,56 @@ DROP table <>;
 dfs -rm -R <hdfs path>
 
 
+--------- PArtitioning and bucketing in hive -----
+
+Mananging large tables : partitioing
+Performance relatted issues for storing in a single file -> Patitioning and Bucketing
+
+: By default the partitioning means the list partitioning in case of hive
+
+Hash partitioning is known as bucketing when it comes to hive
+
+
+--------- Creating Tables using ORC file format -----
+
+1, create database if not exists;
+2. use trainig_retail ;
+3. show tables;
+4. orc --> col strg binary
+5. cd /data/retail_db/order_items/ : here is the part file which is a 
+, sep text file.
+
+6. create table orders (.......float for decimal) 
+stored as orc;
+
+describe formatted. : check the  input format / output format 
+
+load data local path '' path into table order_items; : error due to file format
+
+--------- INserting data into table for specific file format ----
+
+create a stage table
+load from source
+
+create table order_item_stg () row format....
+
+load data into the table
+validate with select to review the data.
+
+wc -l part-0000
+
+insert into table order_item select * from order_items_stg;
+
+using insert the format is being chNGED.Mapr takes care internally.
+
+dfs -tail --> binary file format..
+
+orc replaced the rc file format.
+
+
+source --> stg --> insert into --> orc file format table
+
+
 
 
 

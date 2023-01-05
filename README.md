@@ -380,6 +380,43 @@ source --> stg --> insert into --> orc file format table
 
 ### LOAD Cmd for ORC file format.
 
+Load : w/o any transformation and performing faster
+Insert : with the transformation and performing slower
+
+LOAD Just update the metadata.
+
+SHOW TABLES;
+LOAD DATA LOCAL INPATH '' INTO ORDERS;
+
+Copies the file as is using LOAD.MAin file name is same.
+File format are same then LOAD will work.
+
+DROP Table
+Create w/o row format.
+Try load : Successful for same file format.
+Check the delimiter. Why NULLS.
+
+DROP TABLE and try the same with STRING with the first field.
+
+We cannot load from order_item_stg table to order_items tables
+using LOAD command as the field delimitters are different.
+
+Hence transformations are required using INSERT.
+
+INSERT OVERWRITe TABLE order_items select * from order_items_stg.
+
+Insert : Takes time.
+
+Q. What is the difference b/w LOAD a table and INSERT into a table in hive?
+ANS : 
+1. LOAD is to be used only when we are sure that both tables are in similar format (e.g : Having same delimiters).If the format is different we need to use INSERT COMMAND.
+
+2. LOAD operation is faster as it is similar to copying or moving the file. However, Insert operation is slower as it is meant to use for transformation purposes.
+
+
+
+
+
 
 
 

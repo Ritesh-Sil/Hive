@@ -414,6 +414,31 @@ ANS :
 2. LOAD operation is faster as it is similar to copying or moving the file. However, Insert operation is slower as it is meant to use for transformation purposes.
 
 
+### Creating Partitioned table in HIVE
+
+PARTION BY col datatype.
+
+```
+CREATE TABLE order_part(...)
+PARTITIONED BY (order_month INT)
+...;
+
+```
+
+order_month is not part of the actual data, therefore we need to derive.
+
+We cannot use LOAD here, as partioning is done.
+
+Try the load command to validate:
+```
+LOAD DATA LOCAL INPATH '/data/retail_db/orders' INTO TABLE order_part;
+```
+In many cases the data will not be prepartitioned in the sources.
+Therefore it is always good to create a stage table, partition there and load the target table.
+
+
+
+
 
 
 

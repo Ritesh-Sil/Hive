@@ -20,5 +20,21 @@ Q. How do you see the execution plan of a query?
 ```
 EXPLAIN SELECT * FROM CUSTOMER;
 ```
+Q. How do you see the database in which you are currently working on?
+- SET hive.cli.print.current.db = true
+
+Q. What is the default storage location of the hive tables?
+- /user/hive/warehouse.
+
+Q. What do you do to have a table for a particular session?
+- Create temporary tables.
+- /tmp/hive/'<user>'/*
+- Temporary tables will be removed when the session is closed.
+
+Q. What are the limitations of hive temporary tables?
+- Only for a given session.
+- Partition columns is not supported.
+- Indexes are not supported.
+- The user cannot access the parmanent table with same name of temporary table unless the temporary table is dropped.
 
 

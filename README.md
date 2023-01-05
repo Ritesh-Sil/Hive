@@ -510,6 +510,73 @@ DFS -TAIL <FILE>
 ```
 
 ### Bucketing with sorting
+SHOW CREATE TABLE;
+DROP TABLE
+
+```
+....
+....
+CLUSTERED BY (COL1...)
+SORTED BY (COL2...)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+
+
+INSERT INTO TABLE........................
+```
+
+```
+DFS -TAIL <HDFS LOACTION>
+```
+
+
+### Overview of ACID Transactions in Hive
+
+Hive is used for heavy weight batch processing, therefore transactions for individual records are not that feasible.
+
+File format should be compatible with ACID transactions.
+One such file format is orc.
+
+We need to bucket the records in orc file format.
+
+Create a table and insert a record into the table.
+
+insert into <> values ('','','',...') ;
+
+Need to make sure that we select proper engine in configuration.
+It should be TEZ.
+
+Now if we try to UPDATE a record, it will not work.
+
+ACID transaction is required to maintain SCD.
+
+
+### Create tables for the ACID transaction
+
+```
+cd /etc/hive/conf/
+
+grep -i txn hive-site.xml
+
+```
+
+Check the 'hive.txn.manager' -> Hive Transaction manager.
+1. We need to change it from DummyTxnManager to DbTxnManager.
+2. Also, we need to update hive.support.concurrency =true
+3. Recreate the table in orc format.
+4. ALTER TABLE orders SET TBLPROPERTIES('transaction' = 'true')
+
+Now we can check the UPDATE Query.
+
+
+
+
+
+
+
+
+
+
+
 
 
 

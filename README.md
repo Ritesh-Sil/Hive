@@ -329,7 +329,7 @@ DROP table <>;
 dfs -rm -R <hdfs path>
 
 
---------- PArtitioning and bucketing in hive -----
+### Partitioning and bucketing in hive 
 
 Mananging large tables : partitioing
 Performance relatted issues for storing in a single file -> Patitioning and Bucketing
@@ -339,7 +339,7 @@ Performance relatted issues for storing in a single file -> Patitioning and Buck
 Hash partitioning is known as bucketing when it comes to hive
 
 
---------- Creating Tables using ORC file format -----
+### Creating Tables using ORC file format 
 
 1, create database if not exists;
 2. use trainig_retail ;
@@ -353,14 +353,14 @@ stored as orc;
 
 describe formatted. : check the  input format / output format 
 
-load data local path '' path into table order_items; : error due to file format
+load data local path '<>' path into table order_items; : error due to file format
 
---------- INserting data into table for specific file format ----
+### Inserting data into table for specific file format
 
 create a stage table
 load from source
 
-create table order_item_stg () row format....
+create table order_item_stg (...) row format....
 
 load data into the table
 validate with select to review the data.
@@ -369,7 +369,7 @@ wc -l part-0000
 
 insert into table order_item select * from order_items_stg;
 
-using insert the format is being chNGED.Mapr takes care internally.
+using insert the format is being changed.Mapr takes care internally.
 
 dfs -tail --> binary file format..
 
@@ -377,6 +377,96 @@ orc replaced the rc file format.
 
 
 source --> stg --> insert into --> orc file format table
+
+### LOAD Cmd for ORC file format.
+
+Load : w/o any transformation and performing faster
+Insert : with the transformation and performing slower
+
+LOAD Just update the metadata.
+
+SHOW TABLES;
+LOAD DATA LOCAL INPATH '' INTO ORDERS;
+
+Copies the file as is using LOAD.MAin file name is same.
+File format are same then LOAD will work.
+
+DROP Table
+Create w/o row format.
+Try load : Successful for same file format.
+Check the delimiter. Why NULLS.
+
+DROP TABLE and try the same with STRING with the first field.
+
+We cannot load from order_item_stg table to order_items tables
+using LOAD command as the field delimitters are different.
+
+Hence transformations are required using INSERT.
+
+INSERT OVERWRITe TABLE order_items select * from order_items_stg.
+
+Insert : Takes time.
+
+Q. What is the difference b/w LOAD a table and INSERT into a table in hive?
+ANS : 
+1. LOAD is to be used only when we are sure that both tables are in similar format (e.g : Having same delimiters).If the format is different we need to use INSERT COMMAND.
+
+2. LOAD operation is faster as it is similar to copying or moving the file. However, Insert operation is slower as it is meant to use for transformation purposes.
+
+
+### Creating Partitioned table in HIVE
+
+PARTION BY col datatype.
+
+```
+CREATE TABLE order_part(...)
+PARTITIONED BY (order_month INT)
+...;
+
+```
+
+order_month is not part of the actual data, therefore we need to derive.
+
+We cannot use LOAD here, as partioning is done.
+
+Try the load command to validate:
+```
+LOAD DATA LOCAL INPATH '/data/retail_db/orders' INTO TABLE order_part;
+```
+In many cases the data will not be prepartitioned in the sources.
+Therefore it is always good to create a stage table, partition there and load the target table.
+
+
+### Adding partitions to tables in hive
+
+We cannot mention the same col name used in partion by clause inside the create table clause, if we do so it will throw error.
+
+```
+ALTER TABLE <> ADD PARTITION (order_mont = 201307) PARTITION (order_mont = 201308) PARTITION (order_mont = 201308) ...;
+```
+
+Check the data directory: 
+```
+dfs -ls path
+```
+
+Check the path.
+
+
+### LOADING into tables with partition
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

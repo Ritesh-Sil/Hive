@@ -379,7 +379,7 @@ orc replaced the rc file format.
 source --> stg --> insert into --> orc file format table
 
 
-
+abcndvekjfgbkbrgjbkjargnbjkbrbrak b 
 
 
 

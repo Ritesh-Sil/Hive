@@ -329,7 +329,7 @@ DROP table <>;
 dfs -rm -R <hdfs path>
 
 
---------- PArtitioning and bucketing in hive -----
+### Partitioning and bucketing in hive 
 
 Mananging large tables : partitioing
 Performance relatted issues for storing in a single file -> Patitioning and Bucketing
@@ -339,7 +339,7 @@ Performance relatted issues for storing in a single file -> Patitioning and Buck
 Hash partitioning is known as bucketing when it comes to hive
 
 
---------- Creating Tables using ORC file format -----
+### Creating Tables using ORC file format 
 
 1, create database if not exists;
 2. use trainig_retail ;
@@ -353,14 +353,14 @@ stored as orc;
 
 describe formatted. : check the  input format / output format 
 
-load data local path '' path into table order_items; : error due to file format
+load data local path '<>' path into table order_items; : error due to file format
 
---------- INserting data into table for specific file format ----
+### Inserting data into table for specific file format
 
 create a stage table
 load from source
 
-create table order_item_stg () row format....
+create table order_item_stg (...) row format....
 
 load data into the table
 validate with select to review the data.
@@ -369,7 +369,7 @@ wc -l part-0000
 
 insert into table order_item select * from order_items_stg;
 
-using insert the format is being chNGED.Mapr takes care internally.
+using insert the format is being changed.Mapr takes care internally.
 
 dfs -tail --> binary file format..
 

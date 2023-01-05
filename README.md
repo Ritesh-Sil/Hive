@@ -454,6 +454,74 @@ Check the path.
 
 
 
+### How to create bucketted tables
+
+Bucketted tables are called hashed tables in traditional RDBMSs
+
+Bucketting  = Hash Partions
+
+Hash Value will be created based on a key.
+Based on the hash value the data will be stored into the corresponding bucket.
+
+```
+clustered by (col1 , col2,  ...) 
+
+Create table orders_buck (fields....)
+clustered by (order_id) into 8 buckets
+row format fields delimited by ',';
+
+describe formatted <table name>
+```
+
+We use insert command to load the data into bucketted table.
+We don't use LOAD command.
+
+
+### Insering data into buckettig tables
+
+As the data is prerpocessed with the bucketting logic, we need to use the insert command.
+
+```
+DESCRIBE FORMATTED TABLE NAME;
+```
+Check the buckets.
+
+```
+INSERT INTO TABLE order_buck
+select * from orders ;
+
+```
+
+We need to enfore the bucketting by :
+
+```
+hive.enforce.bucketing = true ;
+```
+
+Check if we have the data
+```
+SELECT * FROM ORDERS_BUCK LIMIT 10;
+
+DESCRIBE FORMATTED;
+
+DFS -LS <HDFS LOACTION>
+
+DFS -TAIL <FILE>
+```
+
+### Bucketing with sorting
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

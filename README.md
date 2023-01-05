@@ -437,6 +437,21 @@ In many cases the data will not be prepartitioned in the sources.
 Therefore it is always good to create a stage table, partition there and load the target table.
 
 
+### Adding partitions to tables in hive
+
+We cannot mention the same col name used in partion by clause inside the create table clause, if we do so it will throw error.
+
+ALTER TABLE <> ADD PARTITION (order_mont = 201307) PARTITION (order_mont = 201308) PARTITION (order_mont = 201308) ...;
+
+Check the data directory: dfs -ls path
+
+Check the path.
+
+
+
+
+
+
 
 
 

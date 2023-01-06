@@ -5,6 +5,16 @@ Q. What is the default database of hive to store its metadata?
 
 Q. What is the default execution engine in hive?
 - MapReduce
+- We can it in ```/etc/hive/conf/hive-site.xml``` file
+```
+1. vi /etc/hive/conf/hive-site.xml
+2. esc from keyboard
+3. Type : /execution.engine
+4. Press 'Enter' and find the value
+
+```
+- This property could be changed using SET command.
+
 
 Q. How to change the default execution engine in hive?
 - SET hive.execution.engine = tez;

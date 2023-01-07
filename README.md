@@ -567,6 +567,55 @@ Check the 'hive.txn.manager' -> Hive Transaction manager.
 
 Now we can check the UPDATE Query.
 
+### Inserting individual records into hive tables
+
+SHOW CREATE TABLE <>;
+
+DROP TABLE <>;
+
+CREATE TABLE orders(....)
+CLUSTER BY (order_id)
+INTO 8 BUCKETS
+STORED AS ORC
+TBLPROPERTIES('transaction' = 'true');
+
+INSERT INTO orders values(,'',,'COMPLETE');
+
+Inserting multiple records into the same table.
+
+INSERT INTO orders values
+(,'',,'COMPLETE'),
+(,'',,'PENDING'),
+(,'',,'DONE')
+;
+
+Important thing is to check how the buckets are formed using the hdfs command.
+
+### Updating and deleting data from Hive bukceted tables;
+
+SELECT * from orders;
+UPDATE orders SET order_status = 'COMPLETE' where order_status = 'COMPLETE';
+
+dfs -ls <location>
+
+In Update also a new directory is generated.
+
+
+DELETE FROM orders WHERE ORDER_STATUS = 'COMPLETE'
+
+DFS -LS <>
+
+TRUNCATE TABLE orders;
+
+INSERT INTO orders SELECT col1, col2, col3, col4 FROM ORDERS_PART;
+
+Check the # of files.
+
+
+
+
+
+
 
 
 
